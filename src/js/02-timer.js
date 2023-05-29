@@ -14,3 +14,4 @@ const options = {
 
 const calendar = document.querySelector('#datetime-picker');
 const flatpickr = flatpickr(calendar, options);
+console.log(calendar.value);
