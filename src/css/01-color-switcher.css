@@ -1,0 +1,27 @@
+body {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 100vh;
+}
+
+p {
+  position: absolute;
+  top: 0;
+  left: 10px;
+
+  display: block;
+  line-height: 0;
+}
+
+button {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+
+  font-size: 20px;
+  font-weight: bold;
+}
