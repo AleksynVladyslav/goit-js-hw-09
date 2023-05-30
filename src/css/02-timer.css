@@ -1,0 +1,11 @@
+.timer {
+  margin-top: 30px;
+  display: flex;
+  max-width: 300px;
+  justify-content: space-between;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+}
