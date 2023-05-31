@@ -22,7 +22,6 @@ const options = {
   },
 };
 const flatpickr = flatpickr('#datetime-picker', options);
-let timerId = null;
 //refs
 const refs = {
   inputRefs: document.querySelector('#datetime-picker'),
@@ -42,11 +41,12 @@ function onStartTimer() {
 }
 
 function timer() {
-  timerId = setInterval(() => {
+  const timerId = setInterval(() => {
     const selectedDate = new Date(refs.inputRefs.value);
     const currentDate = Date.now();
     const diff = selectedDate - currentDate;
-    if (diff === 0) {
+    console.log(diff);
+    if (diff <= 1000) {
       clearInterval(timerId);
     }
     updateCouter(convertMs(diff));
