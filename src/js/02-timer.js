@@ -1,27 +1,8 @@
-// // Описан в документации
+// Описан в документации
 import flatpickr from 'flatpickr';
-// // Дополнительный импорт стилей
+// Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
 
-// flatpickr
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    const selectedDate = new Date(selectedDates);
-    const currentDate = Date.now();
-
-    if (selectedDate < currentDate) {
-      alert('Please choose a date in the future');
-      return;
-    }
-
-    refs.buttonRefs.disabled = false;
-  },
-};
-const flatpickr = flatpickr('#datetime-picker', options);
 //refs
 const refs = {
   inputRefs: document.querySelector('#datetime-picker'),
@@ -31,9 +12,30 @@ const refs = {
   minutesRef: document.querySelector('span[data-minutes]'),
   secondsRef: document.querySelector('span[data-seconds]'),
 };
-
 refs.buttonRefs.disabled = true;
+// flatpickr
+function options() {
+  return {
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
+    onClose(selectedDates) {
+      const selectedDate = new Date(selectedDates);
+      const currentDate = Date.now();
 
+      if (selectedDate < currentDate) {
+        alert('Please choose a date in the future');
+        return;
+      }
+
+      refs.buttonRefs.disabled = false;
+    },
+  };
+}
+const flatpickr = flatpickr('#datetime-picker', options());
+
+//Listener
 refs.buttonRefs.addEventListener('click', onStartTimer);
 
 function onStartTimer() {
@@ -45,7 +47,7 @@ function timer() {
     const selectedDate = new Date(refs.inputRefs.value);
     const currentDate = Date.now();
     const diff = selectedDate - currentDate;
-    console.log(diff);
+
     if (diff <= 1000) {
       clearInterval(timerId);
     }
