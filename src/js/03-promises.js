@@ -9,6 +9,12 @@ function onSubmitForm(event) {
   const step = Number(event.currentTarget.elements[1].value);
   const amount = Number(event.currentTarget.elements[2].value);
 
+  if (del <= 0 || step <= 0 || amount <= 0) {
+    event.target.reset();
+
+    return alert('Values must be greater than 0');
+  }
+
   createPromises(step, del, amount)
     .then(results => {
       results.forEach(result => {
@@ -24,6 +30,7 @@ function onSubmitForm(event) {
     .catch(error => {
       console.log('Error:', error);
     });
+  event.target.reset();
 }
 
 function createPromise(step, delay) {
