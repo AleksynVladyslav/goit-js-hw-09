@@ -46,13 +46,16 @@ function onStartTimer() {
 }
 
 function timer() {
+  inputRef.disabled = true;
   const selectedDate = new Date(inputRef.value);
   const currentDate = new Date();
   const diff = selectedDate - currentDate;
 
   if (diff <= 0) {
+    inputRef.disabled = false;
     clearInterval(timerId);
     updateCounter({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
     console.log('Countdown completed!');
     return;
   }
