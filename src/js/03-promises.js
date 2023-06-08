@@ -5,9 +5,9 @@ formRef.addEventListener('submit', onSubmitForm);
 function onSubmitForm(event) {
   event.preventDefault();
 
-  const del = Number(event.currentTarget.elements[0].value);
-  const step = Number(event.currentTarget.elements[1].value);
-  const amount = Number(event.currentTarget.elements[2].value);
+  let del = Number(event.currentTarget.elements.delay.value);
+  const step = Number(event.currentTarget.elements.step.value);
+  const amount = Number(event.currentTarget.elements.amount.value);
 
   if (del <= 0 || step <= 0 || amount <= 0) {
     event.target.reset();
@@ -15,21 +15,17 @@ function onSubmitForm(event) {
     return alert('Values must be greater than 0');
   }
 
-  createPromises(step, del, amount)
-    .then(results => {
-      results.forEach(result => {
-        if (result.status === 'fulfilled') {
-          const { step, delay } = result.value;
-          console.log(`✅ Fulfilled promise ${step} in ${delay}ms`);
-        } else if (result.status === 'rejected') {
-          const { step, delay } = result.reason;
-          console.log(`❌ Rejected promise ${step} in ${delay}ms`);
-        }
+  for (let i = 1; i <= amount; i += 1) {
+    const currentPosition = i;
+    createPromise(step, del)
+      .then(({ delay }) => {
+        console.log(`✅ Fulfilled promise ${currentPosition} in ${delay}ms`);
+      })
+      .catch(({ delay }) => {
+        console.log(`❌ Rejected promise ${currentPosition} in ${delay}ms`);
       });
-    })
-    .catch(error => {
-      console.log('Error:', error);
-    });
+    del += step;
+  }
   event.target.reset();
 }
 
@@ -45,15 +41,4 @@ function createPromise(step, delay) {
       }
     }, delay);
   });
-}
-
-function createPromises(step, delay, amount) {
-  const promises = [];
-
-  for (let i = 0; i < amount; i++) {
-    const promise = createPromise(1 + i, delay + i * step);
-    promises.push(promise);
-  }
-
-  return Promise.allSettled(promises);
 }
